@@ -1,0 +1,51 @@
+
+Sure, let's start with the technical design of the MVP for the car mileage validation application using C++.
+
+Database Design
+
+For the testing purpose, you can create a simple SQLite database that stores the necessary car information and mileage data. The database schema could include the following tables:
+
+cars:
+
+id: Unique identifier for each car record
+vin: Vehicle identification number
+model_year: Model year of the car
+odometer: Current odometer reading
+mileage_data:
+
+id: Unique identifier for each mileage data record
+model_year: Model year of the car (foreign key to the cars table)
+expected_mileage: Expected mileage range for the car's model year
+source: Source of the mileage data (e.g., manufacturer, industry standard)
+Data Access Layer (DAL)
+
+Create a C++ class to encapsulate the database interactions for both the cars and mileage_data tables. The DAL should provide methods for:
+
+Adding new car records
+Retrieving car information based on VIN or model year
+Adding new mileage data records
+Retrieving mileage data for a specific car model year
+Mileage Validation Logic
+
+Create a separate class to handle the mileage validation logic. This class should take as input the car's VIN, model year, and odometer reading and provide a method that:
+
+Retrieves the expected mileage range from the DAL based on the car's model year
+Compares the actual odometer reading with the expected mileage range
+Determines whether the actual mileage falls within the expected range
+Returns a validation result indicating whether the mileage is likely original or tampered with
+User Interface (UI)
+
+Create a simple console-based UI that allows users to:
+
+Enter the car's VIN or model year
+Provide the car's odometer reading
+Receive the mileage validation result
+Connecting to a Real Car Database
+
+Once the MVP is functional with the SQLite database, you can extend the application to connect to a real car database. This will require additional steps such as:
+
+Identifying a suitable real car database source (e.g., API, direct database access)
+Establishing a connection to the real car database
+Modifying the DAL to interact with the real database
+Updating the UI to accommodate the real car database connection
+Remember to handle potential errors and exceptions gracefully throughout the application.
