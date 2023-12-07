@@ -1,131 +1,135 @@
+#include "../nlohmann/json.hpp"
 #include <iostream>
 #include <string_view>
 #include <vector>
-#include "../nlohmann/json.hpp"
 
 #ifndef CAR_H
 #define CAR_H
 
+struct CarData
+{
+    // Maintains a read-only view of the car's make
+    std::string_view make;
+    // Maintains a read-only view of the car's model
+    std::string_view model;
+    // Maintains the car's year
+    int year;
+    // Maintains the car's odometer reading
+    long odometerReading;
+    // Maintains a read-only view of the car's fuel type
+    std::string_view fuelType;
+    // Maintains the car's price
+    double price;
+    // Maintains a read-only view of the car's place of origin
+    std::string_view placeOfOrigin;
+    // Maintains a read-only view of the car's transmission type
+    std::string_view transmissionType;
+    // Maintains a read-only view of the car's drivetrain type
+    std::string_view drivetrainType;
+    // Indicates whether the car was damaged
+    bool wasDamaged;
+    // Maintains the count of the car's owners
+    int ownerCount;
+    // Maintains a vector of the car's previous owners
+    std::vector<std::string> previousOwners;
+};
+
 class Car
 {
-public:
-  // Constructor initializes a Car object with given parameters
-  Car(std::string_view make, std::string_view model, int year, long odometerReading,
-      std::string_view fuelType, double price, std::string_view placeOfOrigin,
-      std::string_view transmissionType, std::string_view drivetrainType,
-      bool wasDamaged, int ownerCount, const std::vector<std::string> &previousOwners);
 
-  // Convert to JSON
-  const std::string toJSON() const;
+  private:
+    CarData carData;
 
-  // Retrieves the make of the car
-  std::string_view getMake() const;
+  public:
+    // Default constructor for Car class
+    Car() : carData(){};
 
-  // Sets the make of the car
-  void setMake(std::string_view make);
+    /*
+    Constructor initializes a Car object with given parameters
+    The explicit keyword next to the constructor declaration serves
+    to prevent implicit type conversions when initializing a Car object.
+    This means that we cannot accidentally initialize a Car object using a different
+    type, such as a std::string or double, without explicitly casting.
+    */
+    explicit Car(const CarData &carData) : carData(carData){};
 
-  // Retrieves the model of the car
-  std::string_view getModel() const;
+    // Convert to JSON
+    const std::string toJSON() const;
 
-  // Sets the model of the car
-  void setModel(std::string_view model);
+    // Extract data from JSON
+    static Car fromJSON(const std::string_view &carJSONString);
 
-  // Retrieves the year of the car
-  int getYear() const;
+    // Retrieves the make of the car
+    std::string_view getMake() const;
 
-  // Sets the year of the car
-  void setYear(int year);
+    // Sets the make of the car
+    void setMake(std::string_view make);
 
-  // Retrieves the odometer reading of the car
-  long getOdometerReading() const;
+    // Retrieves the model of the car
+    std::string_view getModel() const;
 
-  // Sets the odometer reading of the car
-  void setOdometerReading(long odometerReading);
+    // Sets the model of the car
+    void setModel(std::string_view model);
 
-  // Retrieves the fuel type of the car
-  std::string_view getFuelType() const;
+    // Retrieves the year of the car
+    int getYear() const;
 
-  // Sets the fuel type of the car
-  void setFuelType(const std::string_view fuelType);
+    // Sets the year of the car
+    void setYear(int year);
 
-  // Retrieves the price of the car
-  double getPrice() const;
+    // Retrieves the odometer reading of the car
+    long getOdometerReading() const;
 
-  // Sets the price of the car
-  void setPrice(double price);
+    // Sets the odometer reading of the car
+    void setOdometerReading(long odometerReading);
 
-  // Retrieves the place of origin of the car
-  std::string_view getPlaceOfOrigin() const;
+    // Retrieves the fuel type of the car
+    std::string_view getFuelType() const;
 
-  // Sets the place of origin of the car
-  void setPlaceOfOrigin(std::string_view placeOfOrigin);
+    // Sets the fuel type of the car
+    void setFuelType(const std::string_view fuelType);
 
-  // Retrieves the transmission type of the car
-  std::string_view getTransmissionType() const;
+    // Retrieves the price of the car
+    double getPrice() const;
 
-  // Sets the transmission type of the car
-  void setTransmissionType(const std::string_view transmissionType);
+    // Sets the price of the car
+    void setPrice(double price);
 
-  // Retrieves the drivetrain type of the car
-  std::string_view getDrivetrainType() const;
+    // Retrieves the place of origin of the car
+    std::string_view getPlaceOfOrigin() const;
 
-  // Sets the drivetrain type of the car
-  void setDrivetrainType(const std::string_view drivetrainType);
+    // Sets the place of origin of the car
+    void setPlaceOfOrigin(std::string_view placeOfOrigin);
 
-  // Indicates whether the car was damaged
-  bool isWasDamaged() const;
+    // Retrieves the transmission type of the car
+    std::string_view getTransmissionType() const;
 
-  // Sets whether the car was damaged
-  void setWasDamaged(bool wasDamaged);
+    // Sets the transmission type of the car
+    void setTransmissionType(const std::string_view transmissionType);
 
-  // Retrieves the number of owners the car has had
-  int getOwnerCount() const;
+    // Retrieves the drivetrain type of the car
+    std::string_view getDrivetrainType() const;
 
-  // Sets the number of owners the car has had
-  void setOwnerCount(int ownerCount);
+    // Sets the drivetrain type of the car
+    void setDrivetrainType(const std::string_view drivetrainType);
 
-  // Retrieves the vector of previous owners of the car
-  std::vector<std::string> getPreviousOwners() const;
+    // Indicates whether the car was damaged
+    bool isWasDamaged() const;
 
-  // Sets the vector of previous owners of the car
-  void setPreviousOwners(std::vector<std::string> &previousOwners);
+    // Sets whether the car was damaged
+    void setWasDamaged(bool wasDamaged);
 
-private:
-  // Maintains a read-only view of the car's make
-  std::string_view make;
+    // Retrieves the number of owners the car has had
+    int getOwnerCount() const;
 
-  // Maintains a read-only view of the car's model
-  std::string_view model;
+    // Sets the number of owners the car has had
+    void setOwnerCount(int ownerCount);
 
-  // Maintains the car's year
-  int year;
+    // Retrieves the vector of previous owners of the car
+    std::vector<std::string> getPreviousOwners() const;
 
-  // Maintains the car's odometer reading
-  long odometerReading;
-
-  // Maintains a read-only view of the car's fuel type
-  std::string_view fuelType;
-
-  // Maintains the car's price
-  double price;
-
-  // Maintains a read-only view of the car's place of origin
-  std::string_view placeOfOrigin;
-
-  // Maintains a read-only view of the car's transmission type
-  std::string_view transmissionType;
-
-  // Maintains a read-only view of the car's drivetrain type
-  std::string_view drivetrainType;
-
-  // Indicates whether the car was damaged
-  bool wasDamaged;
-
-  // Maintains the count of the car's owners
-  int ownerCount;
-
-  // Maintains a vector of the car's previous owners
-  std::vector<std::string> previousOwners;
+    // Sets the vector of previous owners of the car
+    void setPreviousOwners(std::vector<std::string> &previousOwners);
 };
 
 #endif

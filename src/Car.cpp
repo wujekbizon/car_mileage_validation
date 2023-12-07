@@ -1,161 +1,168 @@
 #include "./include/Car.h"
 
-// Constructor for Car class
-Car::Car(const std::string_view make, const std::string_view model, int year, long odometerReading,
-         const std::string_view fuelType, double price, const std::string_view placeOfOrigin,
-         const std::string_view transmissionType, const std::string_view drivetrainType,
-         bool wasDamaged, int ownerCount, const std::vector<std::string> &previousOwners)
-{
-  // Initialize member variables
-  this->make = make;
-  this->model = model;
-  this->year = year;
-  this->odometerReading = odometerReading;
-  this->fuelType = fuelType;
-  this->price = price;
-  this->placeOfOrigin = placeOfOrigin;
-  this->transmissionType = transmissionType;
-  this->drivetrainType = drivetrainType;
-  this->wasDamaged = wasDamaged;
-  this->ownerCount = ownerCount;
-  this->previousOwners = previousOwners;
-}
-
 const std::string Car::toJSON() const
 {
-  nlohmann::json carJSON;
-  carJSON["make"] = Car::getMake();
-  carJSON["model"] = model;
-  carJSON["year"] = year;
-  carJSON["odometerReading"] = odometerReading;
-  carJSON["fuelType"] = fuelType;
-  carJSON["price"] = price;
-  carJSON["placeOfOrigin"] = placeOfOrigin;
-  carJSON["transmissionType"] = transmissionType;
-  carJSON["drivetrainType"] = drivetrainType;
-  carJSON["wasDamaged"] = wasDamaged;
-  carJSON["ownerCount"] = ownerCount;
-  carJSON["previousOwners"] = previousOwners;
+    nlohmann::json carJSON;
+    carJSON["make"] = carData.make;
+    carJSON["model"] = carData.model;
+    carJSON["year"] = carData.year;
+    carJSON["odometerReading"] = carData.odometerReading;
+    carJSON["fuelType"] = carData.fuelType;
+    carJSON["price"] = carData.price;
+    carJSON["placeOfOrigin"] = carData.placeOfOrigin;
+    carJSON["transmissionType"] = carData.transmissionType;
+    carJSON["drivetrainType"] = carData.drivetrainType;
+    carJSON["wasDamaged"] = carData.wasDamaged;
+    carJSON["ownerCount"] = carData.ownerCount;
+    carJSON["previousOwners"] = carData.previousOwners;
 
-  return carJSON.dump(4);
+    return carJSON.dump();
 }
+
+// static Car Car::fromJSON(const std::string_view &carJSONString)
+// {
+//     nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
+
+//     CarData carData;
+//     carData.make = carJSON["make"];
+//     carData.model = carJSON["model"];
+//     carData.year = carJSON["year"];
+//     carData.odometerReading = carJSON["odometerReading"];
+//     carData.fuelType = carJSON["fuelType"];
+//     carData.price = carJSON["price"];
+//     carData.placeOfOrigin = carJSON["placeOfOrigin"];
+//     carData.transmissionType = carJSON["transmissionType"];
+//     carData.drivetrainType = carJSON["drivetrainType"];
+//     carData.wasDamaged = carJSON["wasDamaged"];
+//     carData.ownerCount = carJSON["ownerCount"];
+
+//     std::vector<std::string> previousOwners;
+//     for (auto &previousOwner : carJSON["previousOwners"])
+//     {
+//         previousOwners.push_back(previousOwner);
+//     }
+//     carData.previousOwners = previousOwners;
+
+//     return Car(carData);
+// }
+
 // Get the make of the car
 std::string_view Car::getMake() const
 {
-  return make;
+    return carData.make;
 }
 // Set the make of the car
 void Car::setMake(const std::string_view make)
 {
-  this->make = make;
+    carData.make = make;
 }
 // Get the model of the car
 std::string_view Car::getModel() const
 {
-  return model;
+    return carData.model;
 }
 // Set the model of the car
 void Car::setModel(const std::string_view model)
 {
-  this->model = model;
+    carData.model = model;
 }
 // Get the year of the car
 int Car::getYear() const
 {
-  return year;
+    return carData.year;
 }
 // Set the year of the car
 void Car::setYear(int year)
 {
-  this->year = year;
+    carData.year = year;
 }
 // Get the odometer reading of the car
 long Car::getOdometerReading() const
 {
-  return odometerReading;
+    return carData.odometerReading;
 }
 // Set the odometer reading of the car
 void Car::setOdometerReading(long odometerReading)
 {
-  this->odometerReading = odometerReading;
+    carData.odometerReading = odometerReading;
 }
 // Get the fuel type of the car
 std::string_view Car::getFuelType() const
 {
-  return fuelType;
+    return carData.fuelType;
 }
 // Set the fuel type of the car
 void Car::setFuelType(const std::string_view fuelType)
 {
-  this->fuelType = fuelType;
+    carData.fuelType = fuelType;
 }
 // Get the price of the car
 double Car::getPrice() const
 {
-  return price;
+    return carData.price;
 }
 // Set the price of the car
 void Car::setPrice(double price)
 {
-  this->price = price;
+    carData.price = price;
 }
 // Get the place of origin of the car
 std::string_view Car::getPlaceOfOrigin() const
 {
-  return placeOfOrigin;
+    return carData.placeOfOrigin;
 }
 // Set the place of origin of the car
 void Car::setPlaceOfOrigin(const std::string_view placeOfOrigin)
 {
-  this->placeOfOrigin = placeOfOrigin;
+    carData.placeOfOrigin = placeOfOrigin;
 }
 // Get the transmission type of the car
 std::string_view Car::getTransmissionType() const
 {
-  return transmissionType;
+    return carData.transmissionType;
 }
 // Set the transmission type of the car
 void Car::setTransmissionType(const std::string_view transmissionType)
 {
-  this->transmissionType = transmissionType;
+    carData.transmissionType = transmissionType;
 }
 // Get the drivetrain type of the car
 std::string_view Car::getDrivetrainType() const
 {
-  return drivetrainType;
+    return carData.drivetrainType;
 }
 // Set the drivetrain type of the car
 void Car::setDrivetrainType(const std::string_view drivetrainType)
 {
-  this->drivetrainType = drivetrainType;
+    carData.drivetrainType = drivetrainType;
 }
 // Check if the car was damaged
 bool Car::isWasDamaged() const
 {
-  return wasDamaged;
+    return carData.wasDamaged;
 }
 // Set the damaged state of the car
 void Car::setWasDamaged(bool wasDamaged)
 {
-  this->wasDamaged = wasDamaged;
+    carData.wasDamaged = wasDamaged;
 }
 // Get the number of previous owners of the car
 int Car::getOwnerCount() const
 {
-  return ownerCount;
+    return carData.ownerCount;
 }
 // Set the number of previous owners of the car
 void Car::setOwnerCount(int ownerCount)
 {
-  this->ownerCount = ownerCount;
+    carData.ownerCount = ownerCount;
 }
 // Retrieves the vector of previous owners of the car
 std::vector<std::string> Car::getPreviousOwners() const
 {
-  return previousOwners;
+    return carData.previousOwners;
 }
 // Sets the vector of previous owners of the car
 void Car::setPreviousOwners(std::vector<std::string> &previousOwners)
 {
-  this->previousOwners = previousOwners;
+    carData.previousOwners = previousOwners;
 }
