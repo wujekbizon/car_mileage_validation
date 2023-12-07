@@ -20,6 +20,25 @@ Car::Car(const std::string_view make, const std::string_view model, int year, lo
   this->ownerCount = ownerCount;
   this->previousOwners = previousOwners;
 }
+
+const std::string Car::toJSON() const
+{
+  nlohmann::json carJSON;
+  carJSON["make"] = Car::getMake();
+  carJSON["model"] = model;
+  carJSON["year"] = year;
+  carJSON["odometerReading"] = odometerReading;
+  carJSON["fuelType"] = fuelType;
+  carJSON["price"] = price;
+  carJSON["placeOfOrigin"] = placeOfOrigin;
+  carJSON["transmissionType"] = transmissionType;
+  carJSON["drivetrainType"] = drivetrainType;
+  carJSON["wasDamaged"] = wasDamaged;
+  carJSON["ownerCount"] = ownerCount;
+  carJSON["previousOwners"] = previousOwners;
+
+  return carJSON.dump(4);
+}
 // Get the make of the car
 std::string_view Car::getMake() const
 {

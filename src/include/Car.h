@@ -1,8 +1,10 @@
-#ifndef CAR_H
-#define CAR_H
-
+#include <iostream>
 #include <string_view>
 #include <vector>
+#include "../nlohmann/json.hpp"
+
+#ifndef CAR_H
+#define CAR_H
 
 class Car
 {
@@ -12,6 +14,9 @@ public:
       std::string_view fuelType, double price, std::string_view placeOfOrigin,
       std::string_view transmissionType, std::string_view drivetrainType,
       bool wasDamaged, int ownerCount, const std::vector<std::string> &previousOwners);
+
+  // Convert to JSON
+  const std::string toJSON() const;
 
   // Retrieves the make of the car
   std::string_view getMake() const;
