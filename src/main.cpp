@@ -12,7 +12,14 @@ int main()
     UI ui;
     // ui.displayWelcomeMessage();
 
+    /*
+    For example, in this VIN “1GNEK13ZX3R298984,” the “G” indicates a vehicle manufactured by
+    General Motors. The first three characters, which includes the country identifier digit is
+    part of the World Manufacturer Identifier (WMI).
+    */
+
     CarData carData;
+    carData.vin = "1GNEK13ZX3R298984";
     carData.make = "Toyota";
     carData.model = "Corolla";
     carData.year = 2003;
@@ -29,7 +36,8 @@ int main()
     Car car = Car(carData);
 
     std::string carJSONString =
-        "[{\"make\":\"Toyota\",\"model\":\"Corolla\",\"year\":2023,\"odometerReading\":100000,\"fuelType\":"
+        "[{\"vin\":\"1GNEK13ZX3R298984\",\"make\":\"Toyota\",\"model\":\"Corolla\",\"year\":2023,\"odometerReading\":"
+        "100000,\"fuelType\":"
         "\"Gasoline\",\"price\":20000.00,\"placeOfOrigin\":\"Japan\",\"transmissionType\":\"Automatic\","
         "\"drivetrainType\":\"Front-wheel drive\",\"wasDamaged\":false,\"ownerCount\":1,\"previousOwners\":[\"John "
         "Doe\",\"Jane Doe\"]}]";

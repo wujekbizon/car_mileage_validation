@@ -8,6 +8,30 @@
 
 struct CarData
 {
+    enum class Type
+    {
+        INT,
+        DOUBLE,
+        STRING,
+        VECTOR,
+        BOOL
+    };
+
+    struct Attribute
+    {
+        std::string name; // Name of the attribute
+        Type type;        // Data type of the attribute
+        union Value {
+            int intVal;
+            double doubleVal;
+            std::string stringVal;
+            std::vector<std::string> vecVal;
+            bool boolVal;
+        } value;
+    };
+
+    // Maintains a read-only view of the car's vin
+    std::string_view vin;
     // Maintains a read-only view of the car's make
     std::string_view make;
     // Maintains a read-only view of the car's model
@@ -15,7 +39,7 @@ struct CarData
     // Maintains the car's year
     int year;
     // Maintains the car's odometer reading
-    long odometerReading;
+    int odometerReading;
     // Maintains a read-only view of the car's fuel type
     std::string_view fuelType;
     // Maintains the car's price
@@ -59,6 +83,12 @@ class Car
     // Extract data from JSON
     static Car fromJSON(const std::string_view &carJSONString);
 
+    // Retrieves the VIN# of the car
+    std::string_view getVINNumber() const;
+
+    // Sets the make of the car
+    void setVINNumber(std::string_view vin);
+
     // Retrieves the make of the car
     std::string_view getMake() const;
 
@@ -78,10 +108,10 @@ class Car
     void setYear(int year);
 
     // Retrieves the odometer reading of the car
-    long getOdometerReading() const;
+    int getOdometerReading() const;
 
     // Sets the odometer reading of the car
-    void setOdometerReading(long odometerReading);
+    void setOdometerReading(int odometerReading);
 
     // Retrieves the fuel type of the car
     std::string_view getFuelType() const;

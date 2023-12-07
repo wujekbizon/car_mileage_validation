@@ -3,6 +3,7 @@
 const std::string Car::toJSON() const
 {
     nlohmann::json carJSON;
+    carJSON["vin"] = carData.vin;
     carJSON["make"] = carData.make;
     carJSON["model"] = carData.model;
     carJSON["year"] = carData.year;
@@ -46,6 +47,16 @@ const std::string Car::toJSON() const
 //     return Car(carData);
 // }
 
+// Get the VIN# of the car
+std::string_view Car::getVINNumber() const
+{
+    return carData.vin;
+}
+// Set the VIN# of the car
+void Car::setVINNumber(const std::string_view vin)
+{
+    carData.vin = vin;
+}
 // Get the make of the car
 std::string_view Car::getMake() const
 {
@@ -77,12 +88,12 @@ void Car::setYear(int year)
     carData.year = year;
 }
 // Get the odometer reading of the car
-long Car::getOdometerReading() const
+int Car::getOdometerReading() const
 {
     return carData.odometerReading;
 }
 // Set the odometer reading of the car
-void Car::setOdometerReading(long odometerReading)
+void Car::setOdometerReading(int odometerReading)
 {
     carData.odometerReading = odometerReading;
 }
