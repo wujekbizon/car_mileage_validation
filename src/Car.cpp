@@ -1,7 +1,9 @@
 #include "./include/Car.h"
 
+// Converts the internal data of a Car object into a JSON-formatted string
 const std::string Car::toJSON() const
 {
+    // Creates a JSON object to hold the car's data using nlohmann library
     nlohmann::json carJSON;
     carJSON["vin"] = carData.vin;
     carJSON["make"] = carData.make;
@@ -17,14 +19,18 @@ const std::string Car::toJSON() const
     carJSON["ownerCount"] = carData.ownerCount;
     carJSON["previousOwners"] = carData.previousOwners;
 
+    // Converts the JSON object to a string and returns it
     return carJSON.dump();
 }
 
+// Parses a JSON string to create a Car object
 Car Car::fromJSON(const std::string_view &carJSONString)
 {
+    CarData carData; // Creates a CarData object to hold the parsed car data
+
     nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
 
-    CarData carData;
+    // Extracts all car data from the JSON object and stores it in the CarData object
     carData.vin = carJSON["vin"].get<std::string_view>();
     carData.make = carJSON["make"].get<std::string_view>();
     carData.model = carJSON["model"].get<std::string_view>();
@@ -37,14 +43,9 @@ Car Car::fromJSON(const std::string_view &carJSONString)
     carData.drivetrainType = carJSON["drivetrainType"].get<std::string_view>();
     carData.wasDamaged = carJSON["wasDamaged"].get<bool>();
     carData.ownerCount = carJSON["ownerCount"].get<int>();
+    carData.previousOwners = carJSON["previousOwners"].get<std::vector<std::string>>();
 
-    std::vector<std::string> previousOwners;
-    for (auto &previousOwner : carJSON["previousOwners"])
-    {
-        previousOwners.push_back(previousOwner);
-    }
-    carData.previousOwners = previousOwners;
-
+    // Creates a Car object from the CarData object
     return Car(carData);
 }
 

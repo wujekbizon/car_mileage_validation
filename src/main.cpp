@@ -44,7 +44,7 @@ int main()
     std::string carJSON = car.toJSON();
 
     car = Car::fromJSON(carJSON);
-    std::cout << std::setw(4) << car.getMake() << car.getOwnerCount() << std::endl;
+    std::cout << std::setw(4) << car.getMake() << car.getPreviousOwners()[0] << std::endl;
     json car1JSON = json::parse(carJSON);
     // CarData car1Data;
     // carData.vin = car1JSON["vin"];
