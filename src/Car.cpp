@@ -20,32 +20,33 @@ const std::string Car::toJSON() const
     return carJSON.dump();
 }
 
-// static Car Car::fromJSON(const std::string_view &carJSONString)
-// {
-//     nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
+Car Car::fromJSON(const std::string_view &carJSONString)
+{
+    nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
 
-//     CarData carData;
-//     carData.make = carJSON["make"];
-//     carData.model = carJSON["model"];
-//     carData.year = carJSON["year"];
-//     carData.odometerReading = carJSON["odometerReading"];
-//     carData.fuelType = carJSON["fuelType"];
-//     carData.price = carJSON["price"];
-//     carData.placeOfOrigin = carJSON["placeOfOrigin"];
-//     carData.transmissionType = carJSON["transmissionType"];
-//     carData.drivetrainType = carJSON["drivetrainType"];
-//     carData.wasDamaged = carJSON["wasDamaged"];
-//     carData.ownerCount = carJSON["ownerCount"];
+    CarData carData;
+    carData.vin = carJSON["vin"].get<std::string_view>();
+    carData.make = carJSON["make"].get<std::string_view>();
+    carData.model = carJSON["model"].get<std::string_view>();
+    carData.year = carJSON["year"].get<int>();
+    carData.odometerReading = carJSON["odometerReading"].get<int>();
+    carData.fuelType = carJSON["fuelType"].get<std::string_view>();
+    carData.price = carJSON["price"].get<double>();
+    carData.placeOfOrigin = carJSON["placeOfOrigin"].get<std::string_view>();
+    carData.transmissionType = carJSON["transmissionType"].get<std::string_view>();
+    carData.drivetrainType = carJSON["drivetrainType"].get<std::string_view>();
+    carData.wasDamaged = carJSON["wasDamaged"].get<bool>();
+    carData.ownerCount = carJSON["ownerCount"].get<int>();
 
-//     std::vector<std::string> previousOwners;
-//     for (auto &previousOwner : carJSON["previousOwners"])
-//     {
-//         previousOwners.push_back(previousOwner);
-//     }
-//     carData.previousOwners = previousOwners;
+    std::vector<std::string> previousOwners;
+    for (auto &previousOwner : carJSON["previousOwners"])
+    {
+        previousOwners.push_back(previousOwner);
+    }
+    carData.previousOwners = previousOwners;
 
-//     return Car(carData);
-// }
+    return Car(carData);
+}
 
 // Get the VIN# of the car
 std::string_view Car::getVINNumber() const

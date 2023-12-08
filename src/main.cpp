@@ -3,7 +3,6 @@
 #include "./nlohmann/json.hpp"
 #include <iomanip>
 #include <iostream>
-#include <sstream>
 
 using json = nlohmann::json;
 
@@ -35,25 +34,22 @@ int main()
 
     Car car = Car(carData);
 
-    std::string carJSONString =
-        "[{\"vin\":\"1GNEK13ZX3R298984\",\"make\":\"Toyota\",\"model\":\"Corolla\",\"year\":2023,\"odometerReading\":"
-        "100000,\"fuelType\":"
-        "\"Gasoline\",\"price\":20000.00,\"placeOfOrigin\":\"Japan\",\"transmissionType\":\"Automatic\","
-        "\"drivetrainType\":\"Front-wheel drive\",\"wasDamaged\":false,\"ownerCount\":1,\"previousOwners\":[\"John "
-        "Doe\",\"Jane Doe\"]}]";
+    // std::string carJSONString =
+    //     "{\"vin\":\"1GNEK13ZX3R298984\",\"make\":\"Ferrari\",\"model\":\"Corolla\",\"year\":2023,\"odometerReading\":"
+    //     "100000,\"fuelType\":"
+    //     "\"Gasoline\",\"price\":20000.00,\"placeOfOrigin\":\"Japan\",\"transmissionType\":\"Automatic\","
+    //     "\"drivetrainType\":\"Front-wheel drive\",\"wasDamaged\":false,\"ownerCount\":6,\"previousOwners\":[\"John "
+    //     "Doe\",\"Jane Doe\"]}";
 
-    json carJSON = car.toJSON();
-    std::cout << std::setw(4) << carJSON << std::endl;
-    std::stringstream input;
-    input << carJSONString;
-    std::string line;
-    while (std::getline(input, line))
-    {
-        // std::cout << line;
-        std::cout << std::setw(4) << json::parse(line);
-    }
+    std::string carJSON = car.toJSON();
 
-    // json car1JSON = json::parse(carJSON);
-    // std::cout << std::setw(4) << car1JSON << std::endl;
+    car = Car::fromJSON(carJSON);
+    std::cout << std::setw(4) << car.getMake() << car.getOwnerCount() << std::endl;
+    json car1JSON = json::parse(carJSON);
+    // CarData car1Data;
+    // carData.vin = car1JSON["vin"];
+    std::string_view vin{car1JSON["vin"].get<std::string_view>()};
+
+    std::cout << vin << std::endl;
     return 0;
 }
