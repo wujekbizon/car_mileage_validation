@@ -9,7 +9,7 @@ using json = nlohmann::json;
 int main()
 {
     UI ui;
-    // ui.displayWelcomeMessage();
+    ui.displayWelcomeMessage();
 
     /*
     For example, in this VIN “1GNEK13ZX3R298984,” the “G” indicates a vehicle manufactured by
