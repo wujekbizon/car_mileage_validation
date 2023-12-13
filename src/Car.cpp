@@ -1,7 +1,7 @@
 #include "./include/Car.h"
 
 // Converts the internal data of a Car object into a JSON-formatted string
-const std::string Car::toJSON() const
+const std::string CarDataSerializable::toJSON() const
 {
     // Creates a JSON object to hold the car's data using nlohmann library
     nlohmann::json carJSON;
@@ -24,10 +24,9 @@ const std::string Car::toJSON() const
 }
 
 // Parses a JSON string to create a Car object
-Car Car::fromJSON(const std::string_view &carJSONString)
+void CarDataSerializable::fromJSON(const std::string_view &carJSONString)
 {
     CarData carData; // Creates a CarData object to hold the parsed car data
-
     nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
 
     // Extracts all car data from the JSON object and stores it in the CarData object
@@ -44,9 +43,12 @@ Car Car::fromJSON(const std::string_view &carJSONString)
     carData.wasDamaged = carJSON["wasDamaged"].get<bool>();
     carData.ownerCount = carJSON["ownerCount"].get<int>();
     carData.previousOwners = carJSON["previousOwners"].get<std::vector<std::string>>();
+}
 
-    // Creates a Car object from the CarData object
-    return Car(carData);
+Car CarDataSerializable::createCar() const
+{
+    Car car(carData);
+    return car;
 }
 
 // Get the VIN# of the car

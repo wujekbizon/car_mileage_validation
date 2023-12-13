@@ -58,9 +58,43 @@ struct CarData
     std::vector<std::string> previousOwners;
 };
 
+/*
+  Base class for serializing and deserializing data to and from JSON format.
+  This class provides a common interface for serializing and deserializing
+  data to and from JSON format. It defines two pure virtual methods, `toJSON()`
+  and `fromJSON()`, which must be implemented by derived classes to provide the
+  specific logic for converting their respective data types to and from JSON.
+
+  Although it is possible to define default implementations for the `toJSON()`
+  and `fromJSON()` methods in this base class, it is generally preferred to
+  create such methods directly inside derived classes. This allows for more
+  flexibility and control over the serialization and deserialization process,
+  and it makes it easier to maintain data-specific logic within the respective
+  data classes.
+ */
+class Serializable
+{
+    /*
+    The = 0 after the method declarations indicates that the methods are pure virtual
+    methods. This means that they must be overridden in derived classes, but they
+    cannot be directly called from the base class.
+    */
+  public:
+    /**
+     * Converts the object's data to a JSON string.
+     * @return A JSON representation of the object's data.
+     */
+    virtual const std::string toJSON() const = 0;
+
+    /**
+     * Deserializes JSON data into an object of the appropriate type.
+     * @param jsonString The JSON representation of the object.
+     */
+    virtual void fromJSON(const std::string_view &jsonString) = 0;
+};
+
 class Car
 {
-
   private:
     CarData carData;
 
@@ -76,12 +110,6 @@ class Car
     type, such as a std::string or double, without explicitly casting.
     */
     explicit Car(const CarData &carData) : carData(carData){};
-
-    // Convert to JSON
-    const std::string toJSON() const;
-
-    // Extract data from JSON
-    static Car fromJSON(const std::string_view &carJSONString);
 
     // Retrieves the VIN# of the car
     std::string_view getVINNumber() const;
@@ -160,6 +188,27 @@ class Car
 
     // Sets the vector of previous owners of the car
     void setPreviousOwners(std::vector<std::string> &previousOwners);
+};
+
+class CarDataSerializable : public Serializable
+{
+  private:
+    CarData carData;
+
+  public:
+    CarDataSerializable() = default;
+    CarDataSerializable(const CarData &carData) : carData(carData)
+    {
+    }
+
+    // Converts the CarData object to a JSON string
+    const std::string toJSON() const override;
+
+    // Parses a JSON string and populates the CarData object
+    void fromJSON(const std::string_view &carJSONString) override;
+
+    // Creates a Car object from the CarData object
+    Car createCar() const;
 };
 
 #endif

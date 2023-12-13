@@ -32,24 +32,16 @@ int main()
     carData.ownerCount = 1;
     carData.previousOwners = std::vector<std::string>{"John Doe", "Jane Doe"};
 
-    Car car = Car(carData);
+    CarDataSerializable carDataSerializable(carData);
+    std::string carJSON = carDataSerializable.toJSON();
 
-    // std::string carJSONString =
-    //     "{\"vin\":\"1GNEK13ZX3R298984\",\"make\":\"Ferrari\",\"model\":\"Corolla\",\"year\":2023,\"odometerReading\":"
-    //     "100000,\"fuelType\":"
-    //     "\"Gasoline\",\"price\":20000.00,\"placeOfOrigin\":\"Japan\",\"transmissionType\":\"Automatic\","
-    //     "\"drivetrainType\":\"Front-wheel drive\",\"wasDamaged\":false,\"ownerCount\":6,\"previousOwners\":[\"John "
-    //     "Doe\",\"Jane Doe\"]}";
+    std::cout << carJSON << std::endl;
 
-    std::string carJSON = car.toJSON();
+    // Access and use the Car object
+    carDataSerializable.fromJSON(carJSON);
 
-    car = Car::fromJSON(carJSON);
-    std::cout << std::setw(4) << car.getMake() << car.getPreviousOwners()[0] << std::endl;
-    json car1JSON = json::parse(carJSON);
-    // CarData car1Data;
-    // carData.vin = car1JSON["vin"];
-    std::string_view vin{car1JSON["vin"].get<std::string_view>()};
+    Car car = carDataSerializable.createCar();
+    std::cout << car.getMake() << car.getVINNumber() << std::endl;
 
-    std::cout << vin << std::endl;
     return 0;
 }
