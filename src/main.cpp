@@ -1,10 +1,7 @@
 #include "./include/Car.h"
 #include "./include/UI.h"
-#include "./nlohmann/json.hpp"
 #include <iomanip>
 #include <iostream>
-
-using json = nlohmann::json;
 
 int main()
 {

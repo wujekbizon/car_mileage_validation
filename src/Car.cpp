@@ -3,46 +3,65 @@
 // Converts the internal data of a Car object into a JSON-formatted string
 const std::string CarDataSerializable::toJSON() const
 {
-    // Creates a JSON object to hold the car's data using nlohmann library
-    nlohmann::json carJSON;
-    carJSON["vin"] = carData.vin;
-    carJSON["make"] = carData.make;
-    carJSON["model"] = carData.model;
-    carJSON["year"] = carData.year;
-    carJSON["odometerReading"] = carData.odometerReading;
-    carJSON["fuelType"] = carData.fuelType;
-    carJSON["price"] = carData.price;
-    carJSON["placeOfOrigin"] = carData.placeOfOrigin;
-    carJSON["transmissionType"] = carData.transmissionType;
-    carJSON["drivetrainType"] = carData.drivetrainType;
-    carJSON["wasDamaged"] = carData.wasDamaged;
-    carJSON["ownerCount"] = carData.ownerCount;
-    carJSON["previousOwners"] = carData.previousOwners;
+    try
+    {
+        // Creates a JSON object to hold the car's data using nlohmann library
+        nlohmann::json carJSON;
+        // Add data from the CarData object to the JSON object
+        carJSON["vin"] = carData.vin;
+        carJSON["make"] = carData.make;
+        carJSON["model"] = carData.model;
+        carJSON["year"] = carData.year;
+        carJSON["odometerReading"] = carData.odometerReading;
+        carJSON["fuelType"] = carData.fuelType;
+        carJSON["price"] = carData.price;
+        carJSON["placeOfOrigin"] = carData.placeOfOrigin;
+        carJSON["transmissionType"] = carData.transmissionType;
+        carJSON["drivetrainType"] = carData.drivetrainType;
+        carJSON["wasDamaged"] = carData.wasDamaged;
+        carJSON["ownerCount"] = carData.ownerCount;
+        carJSON["previousOwners"] = carData.previousOwners;
 
-    // Converts the JSON object to a string and returns it
-    return carJSON.dump();
+        // Converts the JSON object to a string and returns it
+        return carJSON.dump();
+    }
+    catch (const nlohmann::json::exception &e)
+    {
+        // Handle issues during JSON serialization
+        std::cerr << "Error: Serialization failed: " << e.what() << std::endl;
+        return "";
+    }
 }
 
 // Parses a JSON string to create a Car object
 void CarDataSerializable::fromJSON(const std::string_view &carJSONString)
 {
-    CarData carData; // Creates a CarData object to hold the parsed car data
-    nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
+    try
+    {
+        CarData carData; // Creates a CarData object to hold the parsed car data
+        // Parse the JSON string into a nlohmann::json object
+        nlohmann::json carJSON = nlohmann::json::parse(carJSONString);
 
-    // Extracts all car data from the JSON object and stores it in the CarData object
-    carData.vin = carJSON["vin"].get<std::string_view>();
-    carData.make = carJSON["make"].get<std::string_view>();
-    carData.model = carJSON["model"].get<std::string_view>();
-    carData.year = carJSON["year"].get<int>();
-    carData.odometerReading = carJSON["odometerReading"].get<int>();
-    carData.fuelType = carJSON["fuelType"].get<std::string_view>();
-    carData.price = carJSON["price"].get<double>();
-    carData.placeOfOrigin = carJSON["placeOfOrigin"].get<std::string_view>();
-    carData.transmissionType = carJSON["transmissionType"].get<std::string_view>();
-    carData.drivetrainType = carJSON["drivetrainType"].get<std::string_view>();
-    carData.wasDamaged = carJSON["wasDamaged"].get<bool>();
-    carData.ownerCount = carJSON["ownerCount"].get<int>();
-    carData.previousOwners = carJSON["previousOwners"].get<std::vector<std::string>>();
+        // Extracts all car data from the JSON object and stores it in the CarData object
+        carData.vin = carJSON["vin"].get<std::string_view>();
+        carData.make = carJSON["make"].get<std::string_view>();
+        carData.model = carJSON["model"].get<std::string_view>();
+        carData.year = carJSON["year"].get<int>();
+        carData.odometerReading = carJSON["odometerReading"].get<int>();
+        carData.fuelType = carJSON["fuelType"].get<std::string_view>();
+        carData.price = carJSON["price"].get<double>();
+        carData.placeOfOrigin = carJSON["placeOfOrigin"].get<std::string_view>();
+        carData.transmissionType = carJSON["transmissionType"].get<std::string_view>();
+        carData.drivetrainType = carJSON["drivetrainType"].get<std::string_view>();
+        carData.wasDamaged = carJSON["wasDamaged"].get<bool>();
+        carData.ownerCount = carJSON["ownerCount"].get<int>();
+        carData.previousOwners = carJSON["previousOwners"].get<std::vector<std::string>>();
+    }
+    catch (const nlohmann::json::exception &e)
+    {
+        // Handle invalid JSON data
+        std::cerr << "Error: Invalid JSON data: " << e.what() << std::endl;
+    }
 }
 
 Car CarDataSerializable::createCar() const
