@@ -1,6 +1,5 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
-#include <string_view>
 #include <vector>
 
 #ifndef CAR_H
@@ -72,6 +71,7 @@ struct CarData
   and it makes it easier to maintain data-specific logic within the respective
   data classes.
  */
+
 class Serializable
 {
     /*

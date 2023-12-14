@@ -1,5 +1,6 @@
 #include "./include/Car.h"
 #include "./include/UI.h"
+#include "./include/User.h"
 #include <iomanip>
 #include <iostream>
 
@@ -39,6 +40,24 @@ int main()
 
     Car car = carDataSerializable.createCar();
     std::cout << car.getMake() << car.getVINNumber() << std::endl;
+
+    std::cout << std::endl;
+
+    UserData userData;
+    userData.name = "John Doe";
+    userData.email = "johndoe@example.com";
+    userData.phone = "123-456-7890";
+    userData.address = "123 Main Street";
+
+    UserDataSerializable userDataSerializable(userData);
+    std::string userJSON = userDataSerializable.toJSON();
+
+    std::cout << userJSON << std::endl;
+
+    userDataSerializable.fromJSON(userJSON);
+
+    User user = userDataSerializable.createUser();
+    std::cout << user.getName() << " " << user.getEmail() << std::endl;
 
     return 0;
 }

@@ -77,6 +77,12 @@
     "xhash": "cpp",
     "xtree": "cpp",
     "string_view": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "condition_variable": "cpp",
+    "deque": "cpp",
+    "fstream": "cpp",
+    "set": "cpp",
+    "unordered_set": "cpp",
+    "variant": "cpp"
   }
 }
